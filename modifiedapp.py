@@ -9,12 +9,26 @@ from functools import wraps
 # --- Config ---
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'euromove_secret_key'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///euromove.db'
+import os
+basedir =
+os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' +  os.path.join(basedir ,'euromove.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['UPLOAD_FOLDER'] = 'static/uploads'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 db = SQLAlchemy(app)
+@app.route('/check_db')
+def check_db():
+    try:
+        # list all tables in the database
+        result = db.session.execute(
+            'SELECT name FROM sqlite_master WHERE type="table";'
+             ).fetchall()
+        tables = [row[0]] for row in result]
+        return f"Database connected! Tables: {tables}"
+        except Exception as e:
+            return f"Database error: {e}"
 
 # --- Admin Credentials ---
 ADMIN_USERNAME = 'admin'
