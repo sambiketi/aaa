@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>FAQs</h2>
+
+<h3>Submit a Question</h3>
+<form action="{{ url_for('faqs') }}" method="POST">
+    <input type="text" name="user_name" placeholder="Your Name">
+    <input type="email" name="user_email" placeholder="Your Email">
+    <textarea name="question" placeholder="Your Question" required></textarea>
+    <button type="submit" class="btn">Submit Question</button>
+</form>
+
+<h3>Previous Questions & Answers</h3>
+{% for f in faqs %}
+    <div class="card">
+        <p><strong>Q:</strong> {{ f.question }}</p>
+        {% if f.answer %}
+            <p><strong>A:</strong> {{ f.answer }}</p>
+        {% else %}
+            <p><em>Pending admin answer</em></p>
+        {% endif %}
+    </div>
+{% endfor %}
+{% endblock %}

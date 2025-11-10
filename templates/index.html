@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <h1>Welcome to Euromove</h1>
+    <p>Study and Work in Europe</p>
+    <a href="{{ url_for('workshops') }}" class="btn">Book a Workshop</a>
+</section>
+
+<section class="home-buttons">
+    <a href="{{ url_for('about') }}" class="btn">About Us</a>
+    <a href="{{ url_for('opportunities') }}" class="btn">Available Opportunities</a>
+    <a href="{{ url_for('faqs') }}" class="btn">FAQs</a>
+    <a href="{{ url_for('privacy') }}" class="btn">Privacy Policy</a>
+    <a href="{{ url_for('contact') }}" class="btn">Contact & Socials</a>
+</section>
+{% endblock %}

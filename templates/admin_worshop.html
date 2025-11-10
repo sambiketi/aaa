@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Workshops</title>
+</head>
+<body>
+    <h1>Manage Workshops</h1>
+    <a href="{{ url_for('admin') }}">Back to Dashboard</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h2>Create New Workshop</h2>
+    <form action="{{ url_for('admin_workshop') }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Title" required><br>
+        <textarea name="description" placeholder="Description" required></textarea><br>
+        <input type="text" name="date" placeholder="Date (YYYY-MM-DD)" required><br>
+        <input type="text" name="location" placeholder="Location"><br>
+        <select name="mode" required>
+            <option value="Online">Online</option>
+            <option value="Physical">Physical</option>
+        </select><br>
+        <input type="file" name="image_file"><br>
+        <button type="submit">Create Workshop</button>
+    </form>
+
+    <h2>Existing Workshops</h2>
+    <ul>
+        {% for workshop in workshops %}
+            <li>{{ workshop.title }} - {{ workshop.date }} - {{ workshop.mode }}
+                {% if workshop.image_file %}
+                    <br><img src="{{ url_for('static', filename='uploads/' + workshop.image_file) }}" width="100">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

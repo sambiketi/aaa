@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Contact & Socials</h2>
+<p>Email: info@euromove.international</p>
+<p>Phone: +254  727823872</p>
+<h3>Follow us on:</h3>
+<ul>
+{% for s in socials %}
+    <li><a href="{{ s.url }}" target="_blank">{{ s.platform_name }}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage FAQs</title>
+</head>
+<body>
+    <h1>Manage FAQs</h1>
+    <a href="{{ url_for('admin') }}">Back to Dashboard</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h2>Unanswered Questions</h2>
+    <ul>
+        {% for faq in faqs %}
+            <li>
+                <strong>{{ faq.question }}</strong> by {{ faq.user_name }}<br>
+                {% if not faq.answer %}
+                    <form action="{{ url_for('admin_faq') }}" method="POST">
+                        <input type="hidden" name="faq_id" value="{{ faq.id }}">
+                        <textarea name="answer" placeholder="Type answer here" required></textarea><br>
+                        <button type="submit">Submit Answer</button>
+                    </form>
+                {% else %}
+                    Answer: {{ faq.answer }}
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Admin Dashboard</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <nav>
+        <ul>
+            <li><a href="{{ url_for('admin_logo') }}">Manage Logos</a></li>
+            <li><a href="{{ url_for('admin_post') }}">Manage Posts</a></li>
+            <li><a href="{{ url_for('admin_workshop') }}">Manage Workshops</a></li>
+            <li><a href="{{ url_for('admin_faq') }}">Manage FAQs</a></li>
+            <li><a href="{{ url_for('admin_social') }}">Manage Social Links</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Overview</h2>
+        <p>Total Posts: {{ posts|length }}</p>
+        <p>Total Workshops: {{ workshops|length }}</p>
+        <p>Total FAQs: {{ faqs|length }}</p>
+        <p>Total Logos: {{ logos|length }}</p>
+        <p>Total Social Links: {{ socials|length }}</p>
+    </section>
+</body>
+</html>

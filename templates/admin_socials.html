@@ -1,0 +1,21 @@
+<h1>Manage Social Links</h1>
+<a href="{{ url_for('admin') }}">Back to Dashboard</a>
+
+<h2>Add New Social Link</h2>
+<form action="{{ url_for('admin_socials') }}" method="POST">
+    <input type="text" name="platform_name" placeholder="Platform Name" required><br>
+    <input type="url" name="url" placeholder="URL" required><br>
+    <button type="submit">Add Link</button>
+</form>
+
+<h2>Existing Social Links</h2>
+<ul>
+    {% for link in socials %}
+    <li>
+        {{ link.platform_name }} - {{ link.url }}
+        <form action="{{ url_for('delete_social', social_id=link.id) }}" method="POST">
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Logo</title>
+</head>
+<body>
+    <h1>Upload Logo</h1>
+    <a href="{{ url_for('admin') }}">Back to Dashboard</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <form action="{{ url_for('admin_logo') }}" method="POST" enctype="multipart/form-data">
+        <input type="file" name="logo" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Existing Logos</h2>
+    <ul>
+        {% for logo in logos %}
+            <li>{{ logo.file_name }} - uploaded at {{ logo.uploaded_at }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

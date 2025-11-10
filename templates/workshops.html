@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Upcoming Workshops</h2>
+{% for w in workshops %}
+    <div class="card">
+        <h3>{{ w.title }}</h3>
+        {% if w.image_file %}
+            <img src="{{ url_for('static', filename='uploads/' + w.image_file) }}" alt="{{ w.title }}">
+        {% endif %}
+        <p>{{ w.description }}</p>
+        <p>Date: {{ w.date }} | Mode: {{ w.mode }} {% if w.location %}| Location: {{ w.location }}{% endif %}</p>
+        <form action="{{ url_for('book_workshop', workshop_id=w.id) }}" method="POST">
+            <input type="text" name="user_name" placeholder="Your Name" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="text" name="phone" placeholder="Phone">
+            <button type="submit" class="btn">Book</button>
+        </form>
+    </div>
+{% endfor %}
+{% endblock %}

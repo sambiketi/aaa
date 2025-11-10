@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Posts</title>
+</head>
+<body>
+    <h1>Manage Posts</h1>
+    <a href="{{ url_for('admin') }}">Back to Dashboard</a>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <h2>Create New Post</h2>
+    <form action="{{ url_for('admin_post') }}" method="POST" enctype="multipart/form-data">
+        <input type="text" name="title" placeholder="Title" required><br>
+        <textarea name="content" placeholder="Content" required></textarea><br>
+        <select name="category" required>
+            <option value="about_us">About Us</option>
+            <option value="opportunity">Opportunity</option>
+            <option value="privacy_policy">Privacy Policy</option>
+            <option value="workshop_info">Workshop Info</option>
+        </select><br>
+        <input type="file" name="image_file"><br>
+        <button type="submit">Create Post</button>
+    </form>
+
+    <h2>Existing Posts</h2>
+    <ul>
+        {% for post in posts %}
+            <li>{{ post.title }} ({{ post.category }}) - {{ post.created_at }}
+                {% if post.image_file %}
+                    <br><img src="{{ url_for('static', filename='uploads/' + post.image_file) }}" width="100">
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

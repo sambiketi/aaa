@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Privacy Policy</h2>
+{% for post in content %}
+    <div class="card">
+        {% if post.image_file %}
+            <img src="{{ url_for('static', filename='uploads/' + post.image_file) }}" alt="{{ post.title }}">
+        {% endif %}
+        <p>{{ post.content }}</p>
+    </div>
+{% endfor %}
+{% endblock %}
